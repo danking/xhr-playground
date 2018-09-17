@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <script>
+      function hello() {
+        fetch("http://localhost:5000/hello", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        }).then(function (response) {
+          return response.text()
+        }).then(function (text) {
+          alert(text)
+        })
+      }
+
+      function add() {
+        var formElement = document.querySelector("form");
+        var formData = new FormData(formElement);
+        var a = formData.get("a")
+        var b = formData.get("b")
+        console.log(formElement)
+        console.log(a)
+        console.log(b)
+        body = JSON.stringify({a: a, b: b})
+        console.log(body)
+        fetch("http://localhost:5000/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: body
+        }).then(function (response) {
+          return response.text()
+        }).then(function (text) {
+          alert(text)
+        }).catch(function (e) {
+          console.log(e)
+        })
+        return false
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="hello()">say hello</button>
+    <form name="form">
+      <label>a:</label>
+      <input type="text" name="a" />
+      <label>b:</label>
+      <input type="text" name="b" />
+      <button onclick="add(); return false">add</button>
+    </form>
+  </body>
+
+</html>
